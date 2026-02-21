@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshat Singh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        
+        :root {
+            --bg-color: #050505;
+            --charcoal: #121212;
+            --electric-blue: #00E5FF;
+            --text-light: #F4F4F4;
+            --text-muted: #A0A0A0;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+       
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+       
+        h1, h2, h3 { text-transform: uppercase; letter-spacing: 2px; }
+        h2 { font-size: 2.5rem; margin-bottom: 2rem; color: var(--electric-blue); text-align: center; text-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
+        p { color: var(--text-muted); margin-bottom: 1rem; }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--bg-color);
+            background: var(--electric-blue);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            border: 2px solid var(--electric-blue);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--electric-blue);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--electric-blue);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--electric-blue);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+        }
+
+       
+        section { padding: 100px 5%; position: relative; z-index: 1; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+       
+        .hidden { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+
+       
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.7), rgba(5,5,5,1)), 
+                        url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed; 
+        }
+        
+        .hero h1 { font-size: 4rem; font-weight: 900; margin-bottom: 10px; }
+        .hero h1 span { color: var(--electric-blue); text-shadow: 0 0 20px rgba(0, 229, 255, 0.6); }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px auto; color: var(--text-light); }
+
+        
+        .showreel-container {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            margin-bottom: 20px;
+        }
+        .showreel-container iframe, .showreel-container video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            background: var(--charcoal);
+            cursor: pointer;
+            border: 1px solid #222;
+        }
+        .portfolio-item img { width: 100%; height: 250px; object-fit: cover; transition: var(--transition); filter: grayscale(50%); }
+        .portfolio-item:hover img { transform: scale(1.05); filter: grayscale(0%); }
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 229, 255, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: var(--transition);
+        }
+        .portfolio-item:hover .overlay { opacity: 1; backdrop-filter: blur(2px); }
+        .overlay h3 { background: rgba(5,5,5,0.8); padding: 10px 20px; border-radius: 4px; color: var(--text-light); }
+
+       
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card {
+            background: var(--charcoal); padding: 40px; border-radius: 8px;
+            border-top: 3px solid var(--electric-blue);
+            transition: var(--transition);
+        }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1); }
+        .service-card h3 { margin-bottom: 15px; color: var(--text-light); }
+        .service-card ul { list-style: none; color: var(--text-muted); }
+        .service-card ul li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .service-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--electric-blue); font-weight: bold; }
+
+       
+        .testimonials { background: var(--charcoal); text-align: center; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .quote { font-style: italic; font-size: 1.1rem; margin-bottom: 15px; }
+        .client-name { font-weight: 700; color: var(--electric-blue); }
+
+      
+        .about-content { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-img { flex: 1; min-width: 300px; text-align: center; }
+       
+        .about-img div { 
+            width: 300px; height: 300px; margin: 0 auto; border-radius: 50%; 
+            background: #222; border: 4px solid var(--electric-blue); 
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+            display: flex; align-items: center; justify-content: center; color: #555;
+        }
+
+       
+        .contact {
+            text-align: center;
+            background: linear-gradient(to top, rgba(5,5,5,1), rgba(5,5,5,0.8)), 
+                        url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: cover; background-attachment: fixed;
+        }
+        .contact form { max-width: 600px; margin: 0 auto 30px auto; display: flex; flex-direction: column; gap: 15px; }
+        input, textarea { 
+            width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid #333; 
+            color: white; border-radius: 4px; font-family: inherit;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--electric-blue); background: rgba(0, 229, 255, 0.05); }
+        .contact-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <header class="hero">
+        <div class="container hidden">
+            <h1>Editing That Stops the <span>SCROLL</span></h1>
+            <p>Premium video editing for creators, brands, and businesses. I turn raw footage into cinematic masterpieces that retain attention and drive conversions.</p>
+            <a href="#contact" class="btn">Let's Work Together</a>
+        </div>
+    </header>
+
+    <section id="showreel">
+        <div class="container hidden">
+            <h2>Showreel 2026</h2>
+            <div class="showreel-container">
+                <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj36A4V-hZk-1LCA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto;">My editing style is fast-paced, highly engaging, and tailored to your brand's unique voice. Featuring high-end color grading, immersive sound design, and seamless transitions.</p>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container hidden">
+            <h2>Featured Work</h2>
+            <div class="grid">
+                <div class="portfolio-item">
+                    <div style="height: 250px; background: #222; display: flex; align-items: center; justify-content: center;">[Reels Thumbnail]</div>
+                    <div class="overlay"><h3>Shorts & Reels</h3></div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="height: 250px; background: #222; display: flex; align-items: center; justify-content: center;">[YouTube Thumbnail]</div>
+                    <div class="overlay"><h3>YouTube Content</h3></div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="height: 250px; background: #222; display: flex; align-items: center; justify-content: center;">[Ads Thumbnail]</div>
+                    <div class="overlay"><h3>Commercial Ads</h3></div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="height: 250px; background: #222; display: flex; align-items: center; justify-content: center;">[Cinematic Thumbnail]</div>
+                    <div class="overlay"><h3>Cinematic Edits</h3></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container hidden">
+            <h2>What I Offer</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Content Creator Package</h3>
+                    <ul>
+                        <li>High-retention YouTube editing</li>
+                        <li>A/B split-tested hooks</li>
+                        <li>Sound design & mixing</li>
+                        <li>Color grading</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <h3>Short-Form Mastery</h3>
+                    <ul>
+                        <li>TikToks, Reels, & Shorts</li>
+                        <li>Dynamic captions & graphics</li>
+                        <li>Trend-adapted pacing</li>
+                        <li>24-48 Hour Turnaround</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <h3>Brand & Commercial</h3>
+                    <ul>
+                        <li>Product launch videos</li>
+                        <li>Social media ad creatives</li>
+                        <li>Corporate storytelling</li>
+                        <li>Professional 4K Delivery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container hidden">
+            <h2>Client Love</h2>
+            <div class="testimonial-grid">
+                <div>
+                    <p class="quote">"Working with them completely changed my channel. My retention rate doubled, and the cinematic quality is insane!"</p>
+                    <p class="client-name">- [YouTuber Name], 500k Subs</p>
+                </div>
+                <div>
+                    <p class="quote">"Fast delivery, zero ego, and they just *get* the vision. Highly recommend for any serious brand."</p>
+                    <p class="client-name">- [Brand Name] Marketing Team</p>
+                </div>
+                <div>
+                    <p class="quote">"The best editor I've hired. The electric pace and sound design on my reels make them go viral consistently."</p>
+                    <p class="client-name">- [Creator Name], Influencer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container hidden">
+            <h2>The Editor Behind The Screen</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Hey, I'm <strong>Akshat</strong>.</p>
+                    <p>I don't just cut clips together, I craft visual stories that make people stop scrolling and start watching.</p>
+                    <p>I'm a naturally curious, creative, and chill guy who takes your raw vision and polishes it into high-converting gold. Whether you need an explosive YouTube hook or a moody, cinematic brand film, I've got the technical skills and the creative eye to make it happen.</p>
+                    <p>When I'm not on Premiere Pro or DaVinci Resolve, I'm probably taking a walk.</p>
+                </div>
+                <div class="about-img">
+                    <img src="my-pic2.jpeg" alt="Akshat Singh Profile Photo">
+                </div> <head>
+    <title>My Portfolio</title>
+
+    <style>
+        .about-img img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+
+    border: 6px solid #00f5ff; }  
+
+        
+    </style>
+
+</head> 
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container hidden">
+            <h2>Ready to level up your content?</h2>
+            <p style="margin-bottom: 40px;">Let's discuss your next project. Drop me a message below.</p>
+            
+            <form action="https://formspree.io/f/xojnkjgj" method="POST">
+    <input type="text" name="name" placeholder="Your Name / Brand" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+</form>
+
+            <div class="contact-buttons">
+                <a href="https://wa.me/8279941939" target="_blank" class="btn btn-outline">Chat on WhatsApp</a>
+                <a href="mailto:akshatsheoran007@gmail.com" class="btn btn-outline">Email Me</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+       
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() * 1) - 0.5;
+                this.speedY = (Math.random() * 1) - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
