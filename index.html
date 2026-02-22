@@ -106,21 +106,44 @@
         .hero h1 span { color: var(--electric-blue); text-shadow: 0 0 20px rgba(0, 229, 255, 0.6); }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px auto; color: var(--text-light); }
 
-        
-        .showreel-container {
-            position: relative;
-            padding-bottom: 56.25%; 
-            height: 0;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            margin-bottom: 20px;
-        }
-        .showreel-container iframe, .showreel-container video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        }
+        .showreel-wrapper {
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #0a0a0a, #111);
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+    transition: all 0.4s ease;
+}
 
+.showreel-wrapper:hover {
+    box-shadow: 0 0 60px rgba(0, 229, 255, 0.35);
+    transform: scale(1.01);
+}
+
+.showreel-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 229, 255, 0.4);
+}
+
+.showreel-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.showreel-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 30px auto 0;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+        
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .portfolio-item {
@@ -172,6 +195,13 @@
             box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
             display: flex; align-items: center; justify-content: center; color: #555;
         }
+         .about-img img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+
+    border: 6px solid #00f5ff; }  
 
        
         .contact {
@@ -181,10 +211,41 @@
             background-size: cover; background-attachment: fixed;
         }
         .contact form { max-width: 600px; margin: 0 auto 30px auto; display: flex; flex-direction: column; gap: 15px; }
-        input, textarea { 
-            width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid #333; 
-            color: white; border-radius: 4px; font-family: inherit;
-        }
+        input, textarea, select { 
+    width: 100%;
+    padding: 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #333; 
+    color: white; 
+    border-radius: 6px; 
+    font-family: inherit;
+    font-size: 16px;
+}
+
+
+input:focus, textarea:focus, select:focus { 
+    outline: none; 
+    border-color: var(--electric-blue); 
+    background: rgba(0, 229, 255, 0.05);
+}
+
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+select option {
+    background-color: #121212;
+    color: white;
+}
+.contact form select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%2300E5FF' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 18px;
+}
         input:focus, textarea:focus { outline: none; border-color: var(--electric-blue); background: rgba(0, 229, 255, 0.05); }
         .contact-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 
@@ -193,6 +254,14 @@
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1rem; }
         }
+    #pricing .service-card {
+    position: relative;
+}
+
+#pricing .service-card:hover {
+    border: 1px solid var(--electric-blue);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.3);
+}
     </style>
 </head>
 <body>
@@ -208,14 +277,29 @@
     </header>
 
     <section id="showreel">
-        <div class="container hidden">
-            <h2>Showreel 2026</h2>
+    <div class="container hidden">
+        <h2>Showreel 2026</h2>
+
+        <div class="showreel-wrapper">
             <div class="showreel-container">
-                <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj36A4V-hZk-1LCA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj36A4V-hZk-1LCA"
+                    title="Showreel"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
             </div>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto;">My editing style is fast-paced, highly engaging, and tailored to your brand's unique voice. Featuring high-end color grading, immersive sound design, and seamless transitions.</p>
         </div>
-    </section>
+
+        <p class="showreel-description">
+            Fast-paced, high-retention editing built for creators and brands who want attention, emotion, and conversions.
+        </p>
+
+        <div style="text-align:center; margin-top:30px;">
+            <a href="#contact" class="btn">Start Your Project</a>
+        </div>
+    </div>
+</section>
 
     <section id="portfolio">
         <div class="container hidden">
@@ -257,7 +341,7 @@
                 <div class="service-card">
                     <h3>Short-Form Mastery</h3>
                     <ul>
-                        <li>TikToks, Reels, & Shorts</li>
+                        <li>Instagram Reels, & Shorts</li>
                         <li>Dynamic captions & graphics</li>
                         <li>Trend-adapted pacing</li>
                         <li>24-48 Hour Turnaround</li>
@@ -275,10 +359,54 @@
             </div>
         </div>
     </section>
+    <section id="pricing">
+    <div class="container hidden">
+        <h2>Pricing</h2>
+
+        <div class="services-grid">
+
+            <div class="service-card">
+                <h3>Starter</h3>
+                <p style="font-size: 28px; margin: 15px 0; color: var(--electric-blue);">₹500 / reel</p>
+                <ul>
+                    <li>Up to 60 seconds</li>
+                    <li>Basic captions</li>
+                    <li>Sound sync</li>
+                    <li>2 revisions</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>Growth</h3>
+                <p style="font-size: 28px; margin: 15px 0; color: var(--electric-blue);">₹2,000 / video</p>
+                <ul>
+                    <li>YouTube editing</li>
+                    <li>Advanced transitions</li>
+                    <li>Color grading</li>
+                    <li>Sound design</li>
+                    <li>3 revisions</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>Pro Retainer</h3>
+                <p style="font-size: 28px; margin: 15px 0; color: var(--electric-blue);">Custom Pricing</p>
+                <ul>
+                    <li>Monthly content editing</li>
+                    <li>Priority delivery</li>
+                    <li>Unlimited revisions</li>
+                    <li>Strategy consultation</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
 
     <section id="testimonials" class="testimonials">
         <div class="container hidden">
-            <h2>Client Love</h2>
+            <h2>Sample projects</h2>
+            
             <div class="testimonial-grid">
                 <div>
                     <p class="quote">"Working with them completely changed my channel. My retention rate doubled, and the cinematic quality is insane!"</p>
@@ -308,22 +436,7 @@
                 </div>
                 <div class="about-img">
                     <img src="my-pic2.jpeg" alt="Akshat Singh Profile Photo">
-                </div> <head>
-    <title>My Portfolio</title>
-
-    <style>
-        .about-img img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 50%;
-
-    border: 6px solid #00f5ff; }  
-
-        
-    </style>
-
-</head> 
+                </div> 
 
             </div>
         </div>
@@ -334,11 +447,29 @@
             <h2>Ready to level up your content?</h2>
             <p style="margin-bottom: 40px;">Let's discuss your next project. Drop me a message below.</p>
             
-            <form action="https://formspree.io/f/xojnkjgj" method="POST">
-    <input type="text" name="name" placeholder="Your Name / Brand" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
-    <button type="submit" class="btn">Send Message</button>
+            <form id="whatsappForm">
+    <input type="text" id="name" placeholder="Your Name / Brand" required>
+
+    <input type="email" id="email" placeholder="Your Email" required>
+
+    <select id="project" required>
+        <option value="">Select Project Type</option>
+        <option>Instagram Reels</option>
+        <option>YouTube Video</option>
+        <option>Brand Commercial</option>
+        <option>Other</option>
+    </select>
+
+    <select id="budget" required>
+        <option value="">Select Budget</option>
+        <option>Under ₹1,000</option>
+        <option>₹1,000 – ₹5,000</option>
+        <option>₹5,000+</option>
+    </select>
+
+    <textarea id="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+
+    <button type="submit" class="btn">Send on WhatsApp</button>
 </form>
 
             <div class="contact-buttons">
@@ -417,6 +548,30 @@
 
         initParticles();
         animateParticles();
+        // ===== WhatsApp Form Integration =====
+document.getElementById("whatsappForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var project = document.getElementById("project").value;
+    var budget = document.getElementById("budget").value;
+    var message = document.getElementById("message").value;
+
+    var phoneNumber = "918279941939"; // Your number (91 + number, no + sign)
+
+    var whatsappMessage =
+        "Hello Akshat,%0A%0A" +
+        "Name: " + name + "%0A" +
+        "Email: " + email + "%0A" +
+        "Project Type: " + project + "%0A" +
+        "Budget: " + budget + "%0A%0A" +
+        "Project Details:%0A" + message;
+
+    var url = "https://wa.me/" + phoneNumber + "?text=" + whatsappMessage;
+
+    window.open(url, "_blank");
+});
     </script>
 </body>
 </html>
